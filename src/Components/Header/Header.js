@@ -14,7 +14,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css'; 
 import { format } from "date-fns";
 
-const Header = () => {
+const Header = ({type}) => {
     const [openDate, setOpenDate]=useState(false)
   const [date, setDate] = useState([
     {
@@ -41,7 +41,7 @@ const handleOption=(name, operation)=>{
 }
   return (
     <div className="header">
-      <div className="headerContainer">
+      <div className={type === 'list'? "headerContainer listMode" : "headerContainer"}>
         <div className="headerList">
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
@@ -64,9 +64,9 @@ const handleOption=(name, operation)=>{
             <span>Airport Taxi</span>
           </div>
         </div>
-        <div className="headerTitle">
-          <h1>A lifetime discounts? It's genius!</h1>
-        </div>
+        
+          {type !=="list" &&<><h1 className="headerTitle">A lifetime discounts? It's genius!</h1>
+        
         <p className="headerDesc">
           Get rewarded for your travels. Unlock instant savings of 10% or more
           with free E-booking account
@@ -142,6 +142,7 @@ const handleOption=(name, operation)=>{
             <button className="headerButton">Search</button>
           </div>
         </div>
+        </>}
       </div>
     </div>
   );

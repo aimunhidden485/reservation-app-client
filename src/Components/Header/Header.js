@@ -13,9 +13,11 @@ import { DateRange } from "react-date-range";
 import 'react-date-range/dist/styles.css'; 
 import 'react-date-range/dist/theme/default.css'; 
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({type}) => {
     const [openDate, setOpenDate]=useState(false)
+    const [destination, setDestination]=useState('')
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -29,7 +31,7 @@ const [options, setOptions]=useState({
     children:0,
     room:1
 })
-
+const navigate=useNavigate()
 const handleOption=(name, operation)=>{
   setOptions((prev)=>{
     return{
@@ -38,6 +40,9 @@ const handleOption=(name, operation)=>{
     }
     
   })
+}
+const handleSearch=()=>{
+navigate('/hotels', {state:{destination, date, options}})
 }
   return (
     <div className="header">
@@ -82,6 +87,7 @@ const handleOption=(name, operation)=>{
               type="text"
               placeholder="Where are you going?"
               className="headerSearchInput"
+              onChange={(e)=>setDestination(e.target.value)}
             />
           </div>
           <div className="headerSearchItem">
@@ -89,12 +95,13 @@ const handleOption=(name, operation)=>{
               icon={faCalendar}
               className="headerIcon"
             ></FontAwesomeIcon>
-            <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`${format(date[0].startDate, "PPP")} to ${format(date[0].startDate, "PPP")}`}</span>
+            <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`${format(date[0].startDate, "PPP")} to ${format(date[0].endDate, "PPP")}`}</span>
             {
                 openDate && <DateRange
                 editableDateInputs={true}
                 onChange={(item) => setDate([item.selection])}
                 moveRangeOnFirstSelection={false}
+                minDate={new Date()}
                 ranges={date}
                 className='date'
               />
@@ -139,7 +146,7 @@ const handleOption=(name, operation)=>{
             }
           </div>
           <div className="headerSearchItem">
-            <button className="headerButton">Search</button>
+            <button className="headerButton" onClick={handleSearch}>Search</button>
           </div>
         </div>
         </>}

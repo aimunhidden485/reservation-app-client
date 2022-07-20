@@ -23,5 +23,10 @@ font-weight: 500;
     border: none;
     border-radius: 2px;
     cursor: pointer;
-
+    border-bottom: 2px solid #febb02;
+}
+.navButton:active{
+  border: none;
+   /* box-shadow: 0 5px #666; */
+   transform: translateY(4px);
 }
